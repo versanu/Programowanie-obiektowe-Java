@@ -1,24 +1,26 @@
 package lab04;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
 public class PanelRysowania extends JPanel {
-	int lineWidth;
-	int vertexNumber = 4;
-	boolean isRegular;
-	Color backgroundColor;
-	Color lineColor;
+	int lineWidth = 2;
+	int vertexNumber = 3;
+	boolean isRegular = true;
+	Color backgroundColor = Color.WHITE;
+	Color lineColor = Color.BLACK;
 	Dimension panelRysowaniaDimension = new Dimension(400, 400);
+	int margin = 20;
 
 
 	public PanelRysowania() {
 		super();
 		setPreferredSize(panelRysowaniaDimension);
-		this.setBackground(backgroundColor);
 	}
 
 	public boolean isRegular() {
@@ -52,11 +54,7 @@ public class PanelRysowania extends JPanel {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
-		//repaint();
-	}
-
+	
 	public Color getLineColor() {
 		return lineColor;
 	}
@@ -64,29 +62,33 @@ public class PanelRysowania extends JPanel {
 	public void setLineColor(Color lineColor) {
 		this.lineColor = lineColor;
 		//repaint();
-	}	
+	}
 	
+	public void setBackgroundColor(Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+		System.out.println("background color setter");
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
-		RegularPolyVertexCoordinates coords = new RegularPolyVertexCoordinates(vertexNumber,(panelRysowaniaDimension.width/2 - 20), panelRysowaniaDimension);
 		
 		
-	    //g.setColor(backgroundColor);
-	    g.drawPolygon(coords.getxPoints(), coords.getyPoints(), vertexNumber); // Fill the whole panel with the background color
+		g.setColor(backgroundColor);
+	    g.fillRect(0, 0, panelRysowaniaDimension.width, panelRysowaniaDimension.height);
+	    
+	    Graphics2D g2d = (Graphics2D) g;
+	    g2d.setStroke(new BasicStroke(lineWidth));
+	    
+	    if(isRegular) {
+	    	RegularPolyVertexCoordinates coords = new RegularPolyVertexCoordinates(vertexNumber,(panelRysowaniaDimension.width/2 - margin), panelRysowaniaDimension);
+	    	g2d.setColor(lineColor);
+		    g2d.drawPolygon(coords.getxPoints(), coords.getyPoints(), vertexNumber);
+	    } else {
+	    	RandomPolyVertexCoordinates coords = new RandomPolyVertexCoordinates(vertexNumber, panelRysowaniaDimension, margin);
+	    	g2d.setColor(lineColor);
+	    	g2d.drawPolygon(coords.getxPoints(), coords.getyPoints(), vertexNumber);
+	    }
 
-//	    // Set line color
-//	    g.setColor(Color.GREEN);
-//
-//	    // Draw a rectangle based on panel size
-//	    int x = getWidth() / 4; // Position X of the rectangle
-//	    int y = getHeight() / 4; // Position Y of the rectangle
-//	    int width = getWidth() / 2; // Width of the rectangle
-//	    int height = getHeight() / 2; // Height of the rectangle
-//
-//	    g.drawRect(x, y, width, height);
-
-		
-		
 	}
 	
 }

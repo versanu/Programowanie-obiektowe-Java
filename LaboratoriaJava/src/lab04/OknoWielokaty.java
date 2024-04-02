@@ -12,6 +12,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 
 	private JRadioButton regButton, randButton;
 	private PanelRysowania panelRysowania;
+	private String sliderValue = "2";
 	
 	public OknoWielokaty() {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -29,10 +30,17 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 		add(gornyPanel, BorderLayout.NORTH);
 		gornyPanel.setLayout(new FlowLayout());
 		
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 60, 2);
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 2);
 		gornyPanel.add(slider);
 		slider.setPaintTicks(true);
 		slider.setMajorTickSpacing(10);
+		
+		JTextField poleTekstowe = new JTextField();
+		poleTekstowe.setPreferredSize(new Dimension(25, 25));
+        gornyPanel.add(poleTekstowe);
+        
+//        JLabel sliderLabel = new JLabel(sliderValue);
+//        gornyPanel.add(sliderLabel);
 		
 		slider.addChangeListener(new ChangeListener() {
 			
@@ -40,13 +48,19 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			public void stateChanged(ChangeEvent e) {
 				panelRysowania.setVertexNumber(slider.getValue());
 				System.out.println(slider.getValue());
+//				sliderValue = String.format("%d", slider.getValue());
+//				System.out.println(sliderValue);
+				String value = String.format("%d", slider.getValue());
+				poleTekstowe.setText(value);
 				
 				if(randButton.isSelected()) {
 					panelRysowania.setRegular(false);
 				} else {
 					panelRysowania.setRegular(true);
-					System.out.println("regular true");
+					System.out.println("regular true");			
 				}
+				
+				repaint();
 				
 			}
 		});
@@ -63,7 +77,8 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelRysowania.setBackground(JColorChooser.showDialog(srodkowyPanel, "Wybierz kolor tła", Color.WHITE));
+				panelRysowania.setBackgroundColor(JColorChooser.showDialog(srodkowyPanel, "Wybierz kolor tła", Color.WHITE));
+				repaint();
 			}
 		});
 		
@@ -72,6 +87,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelRysowania.setLineColor(JColorChooser.showDialog(srodkowyPanel, "Wybierz kolor lini", Color.WHITE));
+				repaint();
 			}
 		});
 		
@@ -122,6 +138,51 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			}
 		});
 		menu.add(exit);
+		
+		JMenu lineWidthMenu = new JMenu("Line width");
+		menuBar.add(lineWidthMenu);
+		
+		JMenuItem lineWidthOpt1 = new JMenuItem("1 pt");
+		lineWidthOpt1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelRysowania.setLineWidth(1);
+			}
+		});
+		lineWidthMenu.add(lineWidthOpt1);
+
+		JMenuItem lineWidthOpt2 = new JMenuItem("2 pt");
+		lineWidthOpt2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelRysowania.setLineWidth(2);
+			}
+		});
+		lineWidthMenu.add(lineWidthOpt2);
+		
+		JMenuItem lineWidthOpt5 = new JMenuItem("5 pt");
+		lineWidthOpt5.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelRysowania.setLineWidth(5);
+			}
+		});
+		lineWidthMenu.add(lineWidthOpt5);
+		
+		JMenuItem lineWidthOpt10 = new JMenuItem("10 pt");
+		lineWidthOpt10.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelRysowania.setLineWidth(10);
+			}
+		});
+		lineWidthMenu.add(lineWidthOpt10);
+		
+		
 		setJMenuBar(menuBar);
 		
 	}
