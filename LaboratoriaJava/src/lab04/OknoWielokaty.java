@@ -14,6 +14,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 	public OknoWielokaty() {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setSize(600,600);
+		setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
 		
 		//Środkowy panel

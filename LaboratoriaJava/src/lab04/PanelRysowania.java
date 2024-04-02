@@ -40,7 +40,6 @@ public class PanelRysowania extends JPanel {
 	
 	public void setBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
-		System.out.println("background color setter");
 	}
 
 	@Override
