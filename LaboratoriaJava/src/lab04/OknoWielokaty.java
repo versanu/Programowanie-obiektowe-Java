@@ -3,16 +3,13 @@ package lab04;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.*;
 
 public class OknoWielokaty extends JFrame implements ActionListener {
-
 	private JRadioButton regButton, randButton;
 	private PanelRysowania panelRysowania;
-	private String sliderValue = "2";
 	
 	public OknoWielokaty() {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -34,30 +31,26 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 		gornyPanel.add(slider);
 		slider.setPaintTicks(true);
 		slider.setMajorTickSpacing(10);
+		slider.setMinorTickSpacing(5);
+		slider.setPaintLabels(true);
 		
 		JTextField poleTekstowe = new JTextField();
 		poleTekstowe.setPreferredSize(new Dimension(25, 25));
+		poleTekstowe.setEditable(false);
         gornyPanel.add(poleTekstowe);
-        
-//        JLabel sliderLabel = new JLabel(sliderValue);
-//        gornyPanel.add(sliderLabel);
-		
+        		
 		slider.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				panelRysowania.setVertexNumber(slider.getValue());
-				System.out.println(slider.getValue());
-//				sliderValue = String.format("%d", slider.getValue());
-//				System.out.println(sliderValue);
 				String value = String.format("%d", slider.getValue());
 				poleTekstowe.setText(value);
 				
 				if(randButton.isSelected()) {
 					panelRysowania.setRegular(false);
 				} else {
-					panelRysowania.setRegular(true);
-					System.out.println("regular true");			
+					panelRysowania.setRegular(true);		
 				}
 				
 				repaint();
@@ -107,7 +100,6 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 		lewyPanel.add(regButton);
 		lewyPanel.add(randButton);
 		
-		
 		//Prawy panel
 		JPanel prawyPanel = new JPanel();
 		add(prawyPanel, BorderLayout.EAST);
@@ -129,7 +121,9 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			}
 		});
 		menu.add(author);
+		
 		menu.addSeparator();
+		
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener(new ActionListener(){
 			@Override
@@ -148,6 +142,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelRysowania.setLineWidth(1);
+				repaint();
 			}
 		});
 		lineWidthMenu.add(lineWidthOpt1);
@@ -158,6 +153,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelRysowania.setLineWidth(2);
+				repaint();
 			}
 		});
 		lineWidthMenu.add(lineWidthOpt2);
@@ -168,6 +164,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelRysowania.setLineWidth(5);
+				repaint();
 			}
 		});
 		lineWidthMenu.add(lineWidthOpt5);
@@ -178,6 +175,7 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelRysowania.setLineWidth(10);
+				repaint();
 			}
 		});
 		lineWidthMenu.add(lineWidthOpt10);
@@ -194,7 +192,6 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 		} else {
 			panelRysowania.setRegular(false);
 		}
-		
 	}
 	
 	
@@ -203,8 +200,4 @@ public class OknoWielokaty extends JFrame implements ActionListener {
 		frame.setVisible(true);
 
 	}
-
-
-	
-
 }

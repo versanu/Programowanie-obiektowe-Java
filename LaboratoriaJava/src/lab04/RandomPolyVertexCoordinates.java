@@ -9,10 +9,6 @@ public class RandomPolyVertexCoordinates {
 	int margin;
 	int[] xPoints;
 	int[] yPoints;
-	
-	public RandomPolyVertexCoordinates() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public RandomPolyVertexCoordinates(int sides, Dimension panelDimensions, int margin) {
 		super();
@@ -25,8 +21,8 @@ public class RandomPolyVertexCoordinates {
 		
 		Random rand = new Random();
 		for (int i = 0; i < sides; i++) {
-			xPoints[i] = (int) (rand.nextInt(panelDimensions.width - margin));
-			yPoints[i] = (int) (rand.nextInt(panelDimensions.height - margin));
+			xPoints[i] = (int) (margin +rand.nextInt(panelDimensions.width - 2*margin));
+			yPoints[i] = (int) (margin + rand.nextInt(panelDimensions.height - 2*margin));
 		}
 	}
 
@@ -37,5 +33,4 @@ public class RandomPolyVertexCoordinates {
 	public int[] getyPoints() {
 		return yPoints;
 	}
-
 }

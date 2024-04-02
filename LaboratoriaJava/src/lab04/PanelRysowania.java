@@ -17,51 +17,25 @@ public class PanelRysowania extends JPanel {
 	Dimension panelRysowaniaDimension = new Dimension(400, 400);
 	int margin = 20;
 
-
 	public PanelRysowania() {
 		super();
 		setPreferredSize(panelRysowaniaDimension);
 	}
 
-	public boolean isRegular() {
-		return isRegular;
-	}
-
 	public void setRegular(boolean isRegular) {
 		this.isRegular = isRegular;
-		//repaint();
-	}
-
-	public int getLineWidth() {
-		return lineWidth;
 	}
 
 	public void setLineWidth(int lineWidth) {
 		this.lineWidth = lineWidth;
-		//repaint();
-	}
-
-	public int getVertexNumber() {
-		return vertexNumber;
 	}
 
 	public void setVertexNumber(int vertexNumber) {
 		this.vertexNumber = vertexNumber;
-		//repaint();
-	}
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	
-	public Color getLineColor() {
-		return lineColor;
 	}
 
 	public void setLineColor(Color lineColor) {
 		this.lineColor = lineColor;
-		//repaint();
 	}
 	
 	public void setBackgroundColor(Color backgroundColor) {
@@ -71,8 +45,6 @@ public class PanelRysowania extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		
-		
 		g.setColor(backgroundColor);
 	    g.fillRect(0, 0, panelRysowaniaDimension.width, panelRysowaniaDimension.height);
 	    
@@ -88,9 +60,7 @@ public class PanelRysowania extends JPanel {
 	    	g2d.setColor(lineColor);
 	    	g2d.drawPolygon(coords.getxPoints(), coords.getyPoints(), vertexNumber);
 	    }
-
 	}
-	
 }
 
 
