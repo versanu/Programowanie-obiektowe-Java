@@ -13,20 +13,27 @@ import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel {
 	
-	Pencil pencilLine = new Pencil();
 	ArrayList<Shape> drawnShapes = new ArrayList<Shape>();
+	private Shape currentShape;
 	private boolean isPencil = true;
 	
-	public boolean isPencil() {
-		return isPencil;
+	public void clearDrawnShapes() {
+		drawnShapes.clear();
+		repaint();
 	}
 
 	public void setPencil(boolean isPencil) {
 		this.isPencil = isPencil;
 	}
 
-	Rectangle drawnRectangle = new Rectangle();
-	
+	public Color getLineColor() {
+		return PrimaryWindow.lineColor;
+	}
+
+	public int getLineWidth() {
+		return PrimaryWindow.lineWidth;
+	}
+
 	public DrawingPanel() {
 		super();
 		setPreferredSize(new Dimension(600,600));
@@ -42,17 +49,13 @@ public class DrawingPanel extends JPanel {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if(isPencil) {
-					int x = e.getX();
-					int y = e.getY();
-					pencilLine.addPoint(x, y);
-				} else { 
-					int x = e.getX();
-					int y = e.getY();
-					drawnRectangle.setCurrentX(e.getX());
-					drawnRectangle.setCurrentY(e.getY());
-//					drawnRectangle.addPoint(x, y);
+					((Pencil) currentShape).addPoint(e.getX(), e.getY());
+					repaint();
+				} else {
+					((Rectangle) currentShape).setCurrentPoint(e.getX(), e.getY());
+					repaint();
 				}
-				repaint();
+				
 				
 			}
 		});
@@ -61,28 +64,21 @@ public class DrawingPanel extends JPanel {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
-				if (isPencil) {
-					pencilLine = new Pencil();
-				} else {
-					drawnRectangle = new Rectangle();
-					
-				}
-				
-				
-				
+				drawnShapes.add(currentShape);
+                currentShape = null;
+                repaint();
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
 				
-				if(!isPencil) {
-					drawnRectangle.setStartX(e.getX());
-					drawnRectangle.setStartY(e.getY());
-					drawnShapes.add(drawnRectangle);
+				if(isPencil) {
+					currentShape = new Pencil(getLineColor(), getLineWidth());
+                    ((Pencil) currentShape).addPoint(e.getX(), e.getY());
 				} else {
-					drawnShapes.add(pencilLine);
+					currentShape = new Rectangle(getLineColor(), getLineWidth());
+					((Rectangle) currentShape).setStartPoint(e.getX(), e.getY());
 				}
 				
 			}
@@ -101,7 +97,6 @@ public class DrawingPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -112,9 +107,11 @@ public class DrawingPanel extends JPanel {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(Color.BLACK);
 		
-		for (Shape pencilLine: drawnShapes) pencilLine.draw(g2d);
-		for (Shape drawnRectangle : drawnShapes) drawnRectangle.draw(g2d);
+		for (Shape shape: drawnShapes) shape.draw(g2d);
+		
+		if (currentShape != null) {
+            currentShape.draw(g2d);
+        }
 	}
 }

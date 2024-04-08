@@ -1,10 +1,22 @@
 package lab05;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 abstract public class Shape {
-	public Shape() {
-		// TODO Auto-generated constructor stub
+	protected Color lineColor;
+	protected int lineWidth;
+	
+	public Shape(Color lineColor, int lineWidth) {
+		this.lineColor = lineColor;
+		this.lineWidth = lineWidth;
+	}
+	
+	public void setColor(Color lineColor) {
+		this.lineColor = lineColor;
+	}
+	public void setLineWidth(int lineWidth) {
+		this.lineWidth = lineWidth;
 	}
 	
 	abstract public void draw(Graphics2D g2d);
