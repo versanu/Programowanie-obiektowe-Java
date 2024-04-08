@@ -34,7 +34,7 @@ public class DrawingPanel extends JPanel {
 		addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
-			public void mouseMoved(MouseEvent e) {
+			public void mouseMoved(MouseEvent e) {	
 				// TODO Auto-generated method stub
 				
 			}
@@ -48,7 +48,9 @@ public class DrawingPanel extends JPanel {
 				} else { 
 					int x = e.getX();
 					int y = e.getY();
-					drawnRectangle.addPoint(x, y);
+					drawnRectangle.setCurrentX(e.getX());
+					drawnRectangle.setCurrentY(e.getY());
+//					drawnRectangle.addPoint(x, y);
 				}
 				repaint();
 				
@@ -62,10 +64,9 @@ public class DrawingPanel extends JPanel {
 				
 				if (isPencil) {
 					pencilLine = new Pencil();
-					drawnShapes.add(pencilLine);
 				} else {
 					drawnRectangle = new Rectangle();
-					drawnShapes.add(drawnRectangle);
+					
 				}
 				
 				
@@ -74,9 +75,15 @@ public class DrawingPanel extends JPanel {
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-//				if(!isPencil) {
-//					drawnRectangle.setStartX() = e.getX();
-//				}
+				
+				
+				if(!isPencil) {
+					drawnRectangle.setStartX(e.getX());
+					drawnRectangle.setStartY(e.getY());
+					drawnShapes.add(drawnRectangle);
+				} else {
+					drawnShapes.add(pencilLine);
+				}
 				
 			}
 			

@@ -57,6 +57,17 @@ public class PrimaryWindow extends JFrame {
 			}
 		});
 		
+		JButton clearPanel = new JButton();
+		gornyPanel.add(clearPanel);
+		
+		clearPanel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		//Menu
 		JMenuBar menuBar;
