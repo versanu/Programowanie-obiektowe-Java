@@ -12,12 +12,5 @@ abstract public class Shape {
 		this.lineWidth = lineWidth;
 	}
 	
-	public void setColor(Color lineColor) {
-		this.lineColor = lineColor;
-	}
-	public void setLineWidth(int lineWidth) {
-		this.lineWidth = lineWidth;
-	}
-	
 	abstract public void draw(Graphics2D g2d);
 }

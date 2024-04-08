@@ -31,17 +31,4 @@ public class Pencil extends Shape {
 			g2d.drawLine(xList.get(i), yList.get(i), xList.get(i+1), yList.get(i+1));
 		}
 	}
-	
-	@Override
-    public void setLineWidth(int lineWidth) {
-        super.setLineWidth(lineWidth);
-        System.out.println("Pencil line width updated: " + lineWidth);
-    }
-	
-	@Override
-    public void setColor(Color lineColor) {
-        super.setColor(lineColor);
-        System.out.println("Pencil line color updated: " + lineColor);
-    }
-
 }

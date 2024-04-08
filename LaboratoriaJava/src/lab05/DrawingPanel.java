@@ -16,34 +16,16 @@ public class DrawingPanel extends JPanel {
 	ArrayList<Shape> drawnShapes = new ArrayList<Shape>();
 	private Shape currentShape;
 	private boolean isPencil = true;
-	
-	public void clearDrawnShapes() {
-		drawnShapes.clear();
-		repaint();
-	}
-
-	public void setPencil(boolean isPencil) {
-		this.isPencil = isPencil;
-	}
-
-	public Color getLineColor() {
-		return PrimaryWindow.lineColor;
-	}
-
-	public int getLineWidth() {
-		return PrimaryWindow.lineWidth;
-	}
 
 	public DrawingPanel() {
 		super();
-		setPreferredSize(new Dimension(600,600));
+		setPreferredSize(new Dimension(1000,700));
 		
 		addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {	
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -52,7 +34,7 @@ public class DrawingPanel extends JPanel {
 					((Pencil) currentShape).addPoint(e.getX(), e.getY());
 					repaint();
 				} else {
-					((Rectangle) currentShape).setCurrentPoint(e.getX(), e.getY());
+					((Rectangle) currentShape).setEndPoint(e.getX(), e.getY());
 					repaint();
 				}
 				
@@ -71,8 +53,6 @@ public class DrawingPanel extends JPanel {
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
-				
 				if(isPencil) {
 					currentShape = new Pencil(getLineColor(), getLineWidth());
                     ((Pencil) currentShape).addPoint(e.getX(), e.getY());
@@ -86,20 +66,35 @@ public class DrawingPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				// TODO Auto-generated method stub
 			}
 		});
+	}
+	
+	public void clearDrawnShapes() {
+		drawnShapes.clear();
+		repaint();
+	}
+
+	public void setPencil(boolean isPencil) {
+		this.isPencil = isPencil;
+	}
+
+	public Color getLineColor() {
+		return PrimaryWindow.lineColor;
+	}
+
+	public int getLineWidth() {
+		return PrimaryWindow.lineWidth;
 	}
 	
 	@Override

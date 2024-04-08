@@ -15,8 +15,6 @@ public class Rectangle extends Shape {
 
 	 public Rectangle(Color lineColor, int lineWidth) {
 		 super(lineColor, lineWidth);
-		 System.out.println("Rectangle constructor run, current line width: " + this.lineWidth);
-
 	}
 	 
 	public void setStartPoint(int startX, int startY) {
@@ -24,7 +22,7 @@ public class Rectangle extends Shape {
 		this.startY = startY;
 	}
 
-	public void setCurrentPoint(int currentX, int currentY) {
+	public void setEndPoint(int currentX, int currentY) {
 		this.currentX = currentX;
 		this.currentY = currentY;
 	}
@@ -42,19 +40,6 @@ public class Rectangle extends Shape {
 		g2d.setStroke(new BasicStroke(lineWidth));
 		g2d.drawRect(originX, originY, width, height);
 	}
-	
-	@Override
-    public void setLineWidth(int lineWidth) {
-        super.setLineWidth(lineWidth);
-        System.out.println("Rectangle line width updated: " + lineWidth);
-    }
-	
-	@Override
-    public void setColor(Color lineColor) {
-        super.setColor(lineColor);
-        System.out.println("Rectangle line color updated: " + lineColor);
-    }
-
 }
 
 
