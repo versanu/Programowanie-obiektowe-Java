@@ -13,13 +13,14 @@ import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel {
 	
+	private Dimension drawingPanelDimension = new Dimension(1000,700);
 	ArrayList<Shape> drawnShapes = new ArrayList<Shape>();
 	private Shape currentShape;
 	private boolean isPencil = true;
 
 	public DrawingPanel() {
 		super();
-		setPreferredSize(new Dimension(1000,700));
+		setPreferredSize(drawingPanelDimension);
 		
 		addMouseMotionListener(new MouseMotionListener() {
 			
@@ -97,6 +98,10 @@ public class DrawingPanel extends JPanel {
 		return PrimaryWindow.lineWidth;
 	}
 	
+	public Dimension getDrawingPanelDimension() {
+		return drawingPanelDimension;
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub

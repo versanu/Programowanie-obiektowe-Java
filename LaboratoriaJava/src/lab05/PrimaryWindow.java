@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +20,9 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 import lab04.PanelRysowania;
 
@@ -118,7 +122,7 @@ public class PrimaryWindow extends JFrame {
 		JMenu menu;
 		
 		menuBar = new JMenuBar();
-		menu = new JMenu("Menu glowne");
+		menu = new JMenu("Main menu");
 		menuBar.add(menu);
 		JMenuItem author = new JMenuItem("Autor");
 		author.addActionListener(new ActionListener() {
@@ -141,6 +145,33 @@ public class PrimaryWindow extends JFrame {
 			}
 		});
 		menu.add(exit);
+		
+		menu = new JMenu("File");
+		menuBar.add(menu);
+		JMenuItem saveToFile = new JMenuItem("Save");
+		saveToFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(PrimaryWindow.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+//                    LoadImage = new LoadImage(selectedFile, new Dimension(300, 200));
+                }
+			}
+		});
+		menu.add(saveToFile);
+		JMenuItem loadFile = new JMenuItem("Open");
+		loadFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		menu.add(loadFile);
 		
 		setJMenuBar(menuBar);
 	}
