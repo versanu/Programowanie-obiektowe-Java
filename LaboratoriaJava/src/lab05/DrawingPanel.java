@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 public class DrawingPanel extends JPanel {
 	
 	private Dimension drawingPanelDimension = new Dimension(1000,700);
+	private BufferedImage backgroundImage;
 	ArrayList<Shape> drawnShapes = new ArrayList<Shape>();
 	private Shape currentShape;
 	private boolean isPencil = true;
@@ -83,6 +85,7 @@ public class DrawingPanel extends JPanel {
 	
 	public void clearDrawnShapes() {
 		drawnShapes.clear();
+		this.backgroundImage = null;
 		repaint();
 	}
 
@@ -101,12 +104,23 @@ public class DrawingPanel extends JPanel {
 	public Dimension getDrawingPanelDimension() {
 		return drawingPanelDimension;
 	}
+	
+	public void setBackgroundImage(BufferedImage image) {
+	    this.backgroundImage = image;
+	    repaint();
+	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
+		 if (backgroundImage != null) {
+		        g2d.drawImage(backgroundImage, 0, 0, this);
+		    }
+
 		
 		for (Shape shape: drawnShapes) shape.draw(g2d);
 		

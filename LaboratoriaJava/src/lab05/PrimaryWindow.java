@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -20,9 +21,11 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 import lab04.PanelRysowania;
 
@@ -33,7 +36,7 @@ public class PrimaryWindow extends JFrame {
 	
 	public PrimaryWindow() {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setSize(1000,900);
+		this.setSize(1000,800);
 		setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
 		
@@ -154,21 +157,32 @@ public class PrimaryWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				int result = fileChooser.showOpenDialog(PrimaryWindow.this);
+				int result = fileChooser.showSaveDialog(PrimaryWindow.this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
-//                    LoadImage = new LoadImage(selectedFile, new Dimension(300, 200));
+                    ImageSaver.saveDrawingPanel(drawingPanel, selectedFile);
                 }
 			}
 		});
 		menu.add(saveToFile);
+		
 		JMenuItem loadFile = new JMenuItem("Open");
 		loadFile.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(PrimaryWindow.this);
+				if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                    	BufferedImage image = ImageIO.read(selectedFile);
+                    	drawingPanel.setBackgroundImage(image);
+                    } catch (IOException ex) {
+                    	ex.printStackTrace();
+                        JOptionPane.showMessageDialog(PrimaryWindow.this, "Error loading image.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+				}
 			}
 		});
 		menu.add(loadFile);
