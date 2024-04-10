@@ -13,7 +13,7 @@ public class ImageSaver {
         BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         component.paint(g2d);
-        g2d.dispose();
+        g2d.dispose(); 
 
         try {
             ImageIO.write(image, "PNG", file);
