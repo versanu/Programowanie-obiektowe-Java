@@ -166,7 +166,7 @@ public class PrimaryWindow extends JFrame {
 		});
 		menu.add(saveToFile);
 		
-		JMenuItem loadFile = new JMenuItem("Open");
+		JMenuItem loadFile = new JMenuItem("Choose background image");
 		loadFile.addActionListener(new ActionListener() {
 			
 			@Override

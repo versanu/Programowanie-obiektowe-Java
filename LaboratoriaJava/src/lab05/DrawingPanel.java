@@ -120,7 +120,6 @@ public class DrawingPanel extends JPanel {
 		 if (backgroundImage != null) {
 		        g2d.drawImage(backgroundImage, 0, 0, this);
 		    }
-
 		
 		for (Shape shape: drawnShapes) shape.draw(g2d);
 		
