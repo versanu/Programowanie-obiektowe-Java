@@ -1,5 +1,6 @@
 package lab08;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,9 +22,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.TextAnchor;
 
 public class ChartsFrame extends JFrame {
 	
@@ -34,7 +37,7 @@ public class ChartsFrame extends JFrame {
 		this.setLayout(new BorderLayout());
 		
 		int chartMaxDomainValue = 5;
-		int chartMaxRangeValue = 1;
+		double chartMaxRangeValue = 1.1;
 		double samplingFreq = 0.01;
 		
 		Random rand = new Random();
@@ -44,7 +47,7 @@ public class ChartsFrame extends JFrame {
         JMenuItem sinButton = new JMenuItem("Funkcja Sinus");
         JMenuItem cosButton = new JMenuItem("Funkcja Cosinus");
         JMenuItem linearButton = new JMenuItem("Funkcja Liniowa");
-        JMenuItem polynomialButton = new JMenuItem("Wielomian");
+        JMenuItem polynomialButton = new JMenuItem("Wielomian Legendre'a");
         JMenuItem logButton = new JMenuItem("Funkcja logarytmiczna");
         functionMenu.add(sinButton);
         functionMenu.add(cosButton);
@@ -92,22 +95,52 @@ public class ChartsFrame extends JFrame {
 					if (!series.isEmpty()) {
 						series.clear();
 			        }
-					double aRand = rand.nextDouble(10) - 5;
-					double bRand = rand.nextDouble(0.5);
+					double aRand = rand.nextDouble(4) - 2;
+					double bRand = rand.nextDouble(1) - 0.5;
 					for (double i = -chartMaxDomainValue; i < chartMaxDomainValue; i += samplingFreq) {
 						series.add(i, (aRand * i) + bRand);
 					}
 					ChartsFrame.this.repaint();
 				}
 			});
+		 
+		 polynomialButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (!series.isEmpty()) {
+						series.clear();
+			        }
+					int nRand = rand.nextInt(10)+4;
+					for (double i = -chartMaxDomainValue; i < chartMaxDomainValue; i += samplingFreq) {
+						series.add((chartMaxDomainValue-1)*i, LegendrePolynomialGenerator.getPolynomial(nRand, i));
+					}
+					ChartsFrame.this.repaint();
+				}
+			});
+		 
+		 logButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (!series.isEmpty()) {
+						series.clear();
+			        }
+					double nRand = rand.nextDouble(10);
+					for (double i = -chartMaxDomainValue; i < chartMaxDomainValue; i += samplingFreq) {
+						series.add(i, 0.4*(Math.log(i)/Math.log(nRand)));
+					}
+				}
+			});
+		 
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		dataset.addSeries(series);
 		
 		JFreeChart chart = ChartFactory.createXYLineChart(
 				"Wykres XY",//Tytul
-				"Opis osi X", // opisy osi
-				"Opis osi Y", 
+				"Oś X", // opisy osi
+				"Oś Y", 
 				dataset, // Dane 
 				PlotOrientation.VERTICAL,
 				true, // legenda
@@ -122,6 +155,17 @@ public class ChartsFrame extends JFrame {
         ValueAxis yAxis = plot.getRangeAxis();
         yAxis.setAutoRange(false);
         yAxis.setRange(-chartMaxRangeValue, chartMaxRangeValue);
+        
+        ValueMarker xAxisMarker = new ValueMarker(0);
+        xAxisMarker.setPaint(Color.GRAY);
+        xAxisMarker.setStroke(new BasicStroke(1.5f));
+
+        ValueMarker yAxisMarker = new ValueMarker(0);
+        yAxisMarker.setPaint(Color.GRAY);
+        yAxisMarker.setStroke(new BasicStroke(1.5f));
+
+        plot.addDomainMarker(xAxisMarker);
+        plot.addRangeMarker(yAxisMarker);
 		
 		ChartPanel chartPanel = new ChartPanel(chart);
 		this.getContentPane().add(chartPanel);
